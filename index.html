@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>居酒屋こじょう | 山口市熊野町</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Noto Sans JP', 'sans-serif'],
+            serif: ['Noto Serif JP', 'serif']
+          },
+          colors: {
+            sumi: '#090807',
+            wood: '#3a2115',
+            amber: '#f59e0b',
+            gold: '#f6c56b',
+            cream: '#fff6e8'
+          },
+          boxShadow: {
+            glow: '0 0 40px rgba(245,158,11,.35)',
+            soft: '0 24px 70px rgba(0,0,0,.28)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background:#090807; color:#fff; }
+
+    .intro {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background:
+        radial-gradient(circle at center, rgba(245,158,11,.14), transparent 35%),
+        #090807;
+      display: grid;
+      place-items: center;
+      animation: introOut .85s ease forwards 2.25s;
+    }
+
+    .intro-inner {
+      text-align: center;
+      animation: introLogo 1.7s cubic-bezier(.2,1,.2,1) forwards;
+    }
+
+    @keyframes introOut {
+      to { opacity: 0; visibility: hidden; transform: scale(1.05); }
+    }
+
+    @keyframes introLogo {
+      0% { opacity: 0; transform: translateY(24px) scale(.92); filter: blur(16px); }
+      45% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+      100% { opacity: 1; transform: translateY(-4px) scale(1); }
+    }
+
+    .glass {
+      background:rgba(255,255,255,.08);
+      backdrop-filter:blur(18px);
+      border:1px solid rgba(255,255,255,.14);
+    }
+
+    .hero {
+      position: relative;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(245,158,11,.25), transparent 25%),
+        radial-gradient(circle at 80% 30%, rgba(246,197,107,.18), transparent 28%),
+        linear-gradient(to bottom, rgba(9,8,7,.48), rgba(9,8,7,.96)),
+        url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1800&q=90') center/cover;
+    }
+
+    .hero:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+    }
+
+    .hero:after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -18% -20%;
+      height: 45%;
+      background: radial-gradient(circle, rgba(245,158,11,.22), transparent 65%);
+      filter: blur(40px);
+      animation: fireGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes fireGlow {
+      0%,100% { opacity:.45; transform: scale(1); }
+      50% { opacity:.85; transform: scale(1.08); }
+    }
+
+    .wood-bg {
+      background:
+        linear-gradient(135deg, rgba(58,33,21,.96), rgba(9,8,7,.96)),
+        url('https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=1600&q=85') center/cover;
+    }
+
+    .reveal,
+    .reveal-left,
+    .reveal-right {
+      opacity:0;
+      transition:.9s cubic-bezier(.2,1,.2,1);
+    }
+
+    .reveal { transform:translateY(32px); }
+    .reveal-left { transform:translateX(-34px); }
+    .reveal-right { transform:translateX(34px); }
+
+    .reveal.show,
+    .reveal-left.show,
+    .reveal-right.show {
+      opacity:1;
+      transform:translate(0,0);
+    }
+
+    .marquee { animation: marquee 22s linear infinite; }
+
+    @keyframes marquee {
+      from { transform:translateX(0); }
+      to { transform:translateX(-50%); }
+    }
+
+    .shine {
+      position:relative;
+      overflow:hidden;
+    }
+
+    .shine:before {
+      content:"";
+      position:absolute;
+      top:0;
+      left:-120%;
+      width:70%;
+      height:100%;
+      transform:skewX(-25deg);
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.48),transparent);
+      animation:shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% { left:-120%; }
+      55%,100% { left:140%; }
+    }
+
+    .float {
+      animation: float 5.5s ease-in-out infinite;
+    }
+
+    .float2 {
+      animation: float 6.8s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0%,100% { transform:translateY(0); }
+      50% { transform:translateY(-12px); }
+    }
+
+    .tilt-card {
+      transform-style: preserve-3d;
+      transition:.35s ease;
+    }
+
+    .tilt-card:hover {
+      transform: translateY(-8px) rotateX(3deg) rotateY(-3deg);
+    }
+
+    .steam {
+      position:absolute;
+      width:80px;
+      height:160px;
+      border-radius:999px;
+      background:linear-gradient(to top, transparent, rgba(255,255,255,.18), transparent);
+      filter: blur(18px);
+      animation: steam 5s ease-in-out infinite;
+      opacity:.45;
+      pointer-events:none;
+      z-index:1;
+    }
+
+    .steam.s1 { left:12%; bottom:16%; animation-delay:0s; }
+    .steam.s2 { right:18%; bottom:22%; animation-delay:1.4s; }
+    .steam.s3 { left:48%; bottom:12%; animation-delay:2.2s; }
+
+    @keyframes steam {
+      0% { transform:translateY(30px) scale(.7); opacity:0; }
+      35% { opacity:.55; }
+      100% { transform:translateY(-120px) scale(1.25); opacity:0; }
+    }
+
+    .scroll-line {
+      width:1px;
+      height:60px;
+      background:linear-gradient(to bottom, white, transparent);
+      animation: scrollLine 1.8s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0% { transform:scaleY(0); transform-origin:top; opacity:.3; }
+      50% { transform:scaleY(1); opacity:1; }
+      100% { transform:scaleY(0); transform-origin:bottom; opacity:.3; }
+    }
+
+    .menu-card img,
+    .insta-card img {
+      transition: transform .85s ease;
+    }
+
+    .menu-card:hover img,
+    .insta-card:hover img {
+      transform: scale(1.09);
+    }
+
+    .pay-badge {
+      animation: badgePulse 3s ease-in-out infinite;
+    }
+
+    @keyframes badgePulse {
+      0%,100% { box-shadow:0 0 0 rgba(245,158,11,0); }
+      50% { box-shadow:0 0 30px rgba(245,158,11,.35); }
+    }
+
+    .noise:before {
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:1000;
+      opacity:.045;
+      background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%22.85%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');
+    }
+
+    .form-input {
+      width:100%;
+      border-radius:1rem;
+      border:1px solid rgba(9,8,7,.15);
+      padding:1rem;
+      outline:none;
+      background:#fff;
+    }
+
+    .form-input:focus {
+      border-color:#f59e0b;
+      box-shadow:0 0 0 4px rgba(245,158,11,.15);
+    }
+  </style>
+</head>
+
+<body class="font-sans pb-24 md:pb-0 noise">
+
+  <div class="intro">
+    <div class="intro-inner">
+      <p class="text-amber tracking-[.35em] text-xs mb-4 font-black">YAMAGUCHI IZAKAYA</p>
+      <h1 class="font-serif text-6xl font-black">こじょう</h1>
+      <div class="h-px w-56 bg-gradient-to-r from-transparent via-amber to-transparent mx-auto mt-5"></div>
+      <p class="text-white/60 tracking-[.25em] text-xs mt-5">SAKE / FOOD / ENKAI</p>
+    </div>
+  </div>
+
+  <header class="fixed top-0 left-0 right-0 z-50 bg-sumi/80 backdrop-blur-xl border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-full bg-amber text-sumi grid place-items-center font-serif font-black text-xl shadow-glow">こ</div>
+        <div>
+          <p class="font-serif font-black text-xl leading-none">居酒屋 こじょう</p>
+          <p class="text-[10px] tracking-[.28em] text-white/55 mt-1">YAMAGUCHI IZAKAYA</p>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 text-sm text-white/70 font-bold">
+        <a href="#feature" class="hover:text-amber">特徴</a>
+        <a href="#menu" class="hover:text-amber">料理</a>
+        <a href="#banquet" class="hover:text-amber">宴会</a>
+        <a href="#reserve" class="hover:text-amber">予約</a>
+      </nav>
+
+      <a href="tel:07056773930" class="shine rounded-full bg-white text-sumi px-5 py-2 font-black text-sm">電話予約</a>
+    </div>
+  </header>
+
+  <section class="hero min-h-screen pt-24 px-4 flex items-end overflow-hidden">
+    <div class="steam s1"></div>
+    <div class="steam s2"></div>
+    <div class="steam s3"></div>
+
+    <div class="max-w-6xl mx-auto w-full pb-16 relative z-10">
+      <p class="inline-flex glass rounded-full px-4 py-2 text-sm text-white/85 mb-6 reveal">
+        山口市熊野町4-18 / 17:30〜24:00
+      </p>
+
+      <h1 class="font-serif text-6xl sm:text-7xl md:text-8xl font-black leading-[1.05] tracking-[-0.04em] reveal-left">
+        今夜、<br>
+        旨い酒と<br>
+        <span class="text-amber drop-shadow-[0_0_20px_rgba(245,158,11,.55)]">旨い飯。</span>
+      </h1>
+
+      <p class="mt-6 text-white/75 leading-8 text-lg reveal max-w-xl">
+        全席掘りごたつ。個室あり。最大60名まで対応。宴会・飲み会・仕事終わりの一杯に。
+      </p>
+
+      <div class="mt-8 grid grid-cols-2 gap-3 max-w-md reveal">
+        <a href="tel:07056773930" class="shine rounded-full bg-amber text-sumi py-4 text-center font-black shadow-glow">電話する</a>
+        <a href="#reserve" class="rounded-full glass py-4 text-center font-black hover:bg-white/15 transition">宴会相談</a>
+      </div>
+
+      <div class="mt-10 flex gap-3 overflow-x-auto pb-2 reveal">
+        <div class="glass rounded-full px-5 py-3 whitespace-nowrap text-sm">🍺 飲み放題あり</div>
+        <div class="glass rounded-full px-5 py-3 whitespace-nowrap text-sm">👥 最大60名</div>
+        <div class="glass rounded-full px-5 py-3 whitespace-nowrap text-sm">🚬 喫煙可</div>
+        <div class="glass rounded-full px-5 py-3 whitespace-nowrap text-sm">🚪 個室完備</div>
+      </div>
+
+      <div class="hidden md:flex absolute right-0 bottom-20 flex-col items-center gap-4 text-white/45 tracking-[.35em] text-xs">
+        <span>SCROLL</span>
+        <div class="scroll-line"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="bg-amber text-sumi overflow-hidden py-3">
+    <div class="marquee flex gap-10 whitespace-nowrap font-black tracking-[.22em] text-sm">
+      <span>全席掘りごたつ</span><span>個室あり</span><span>飲み放題</span><span>最大60名宴会OK</span><span>喫煙可</span>
+      <span>全席掘りごたつ</span><span>個室あり</span><span>飲み放題</span><span>最大60名宴会OK</span><span>喫煙可</span>
+    </div>
+  </div>
+
+  <section id="feature" class="py-20 px-4 bg-sumi relative overflow-hidden">
+    <div class="absolute -right-32 top-10 w-80 h-80 bg-amber/10 blur-3xl rounded-full"></div>
+
+    <div class="max-w-6xl mx-auto relative">
+      <p class="text-amber font-black tracking-[.25em] text-xs reveal">FEATURE</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-black mt-3 reveal-left">こじょうが<br>選ばれる理由。</h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-10">
+        <div class="glass rounded-3xl p-5 tilt-card reveal"><p class="text-3xl">🍺</p><h3 class="font-black mt-3">飲み放題</h3><p class="text-white/50 text-xs mt-2">宴会にも二次会にも</p></div>
+        <div class="glass rounded-3xl p-5 tilt-card reveal"><p class="text-3xl">🦵</p><h3 class="font-black mt-3">全席掘りごたつ</h3><p class="text-white/50 text-xs mt-2">ゆったりくつろげる</p></div>
+        <div class="glass rounded-3xl p-5 tilt-card reveal"><p class="text-3xl">🚬</p><h3 class="font-black mt-3">喫煙可</h3><p class="text-white/50 text-xs mt-2">喫煙される方も安心</p></div>
+        <div class="glass rounded-3xl p-5 tilt-card reveal"><p class="text-3xl">👥</p><h3 class="font-black mt-3">最大60名対応</h3><p class="text-white/50 text-xs mt-2">大人数の宴会もOK</p></div>
+        <div class="glass rounded-3xl p-5 tilt-card reveal"><p class="text-3xl">🚪</p><h3 class="font-black mt-3">個室あり</h3><p class="text-white/50 text-xs mt-2">周りを気にせず楽しめる</p></div>
+        <div class="glass rounded-3xl p-5 tilt-card reveal"><p class="text-3xl">💳</p><h3 class="font-black mt-3">各種決済OK</h3><p class="text-white/50 text-xs mt-2">PayPay・カード対応</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu" class="wood-bg py-20 px-4 overflow-hidden">
+    <div class="max-w-6xl mx-auto">
+      <p class="text-gold font-black tracking-[.25em] text-xs reveal">MENU</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-black mt-3 reveal-left">酒が進む、<br>こじょうの定番。</h2>
+
+      <div class="mt-10 flex gap-4 overflow-x-auto pb-4 snap-x">
+        <div class="menu-card min-w-[78%] sm:min-w-[320px] snap-center rounded-[2rem] overflow-hidden bg-white text-sumi tilt-card reveal">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=900&q=80" class="h-full w-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+            <div class="absolute bottom-5 left-5 text-white">
+              <p class="text-amber font-black text-xs tracking-widest">SASHIMI</p>
+              <h3 class="font-serif text-3xl font-black mt-1">刺身盛り</h3>
+            </div>
+          </div>
+          <div class="p-5 text-sumi/65 text-sm leading-7">
+            まず頼みたい定番。お酒との相性も抜群。
+          </div>
+        </div>
+
+        <div class="menu-card min-w-[78%] sm:min-w-[320px] snap-center rounded-[2rem] overflow-hidden bg-white text-sumi tilt-card reveal">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=900&q=80" class="h-full w-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+            <div class="absolute bottom-5 left-5 text-white">
+              <p class="text-amber font-black text-xs tracking-widest">MEAT</p>
+              <h3 class="font-serif text-3xl font-black mt-1">焼き物</h3>
+            </div>
+          </div>
+          <div class="p-5 text-sumi/65 text-sm leading-7">
+            香ばしい焼き物で一杯。仕事終わりにも。
+          </div>
+        </div>
+
+        <div class="menu-card min-w-[78%] sm:min-w-[320px] snap-center rounded-[2rem] overflow-hidden bg-white text-sumi tilt-card reveal">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=900&q=80" class="h-full w-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
+            <div class="absolute bottom-5 left-5 text-white">
+              <p class="text-amber font-black text-xs tracking-widest">FRIED</p>
+              <h3 class="font-serif text-3xl font-black mt-1">揚げ物</h3>
+            </div>
+          </div>
+          <div class="p-5 text-sumi/65 text-sm leading-7">
+            みんなでつまめる人気メニュー。
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="banquet" class="py-20 px-4 bg-cream text-sumi relative overflow-hidden">
+    <div class="absolute -left-32 top-0 w-96 h-96 bg-amber/20 blur-3xl rounded-full"></div>
+
+    <div class="max-w-6xl mx-auto relative">
+      <p class="text-amber font-black tracking-[.25em] text-xs reveal">BANQUET</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-black mt-3 reveal-left">
+        最大60名様対応。<br>
+        宴会も、<br>
+        飲み会も、<br>
+        こじょうで。
+      </h2>
+      <p class="mt-5 text-sumi/65 leading-8 reveal">
+        歓迎会・送別会・忘年会・新年会・同窓会・会社宴会まで。少人数から大人数までご相談ください。
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-4 mt-10">
+        <div class="rounded-3xl bg-white p-6 shadow-xl tilt-card reveal">
+          <p class="text-amber font-black">STANDARD</p>
+          <h3 class="font-serif text-2xl font-black mt-2">飲み会コース</h3>
+          <p class="text-3xl font-black mt-5">¥3,000〜</p>
+          <p class="text-sumi/55 text-sm mt-3">気軽な飲み会に。</p>
+        </div>
+
+        <div class="rounded-3xl bg-sumi text-white p-6 shadow-xl tilt-card reveal scale-[1.02]">
+          <p class="text-gold font-black">POPULAR</p>
+          <h3 class="font-serif text-2xl font-black mt-2">宴会コース</h3>
+          <p class="text-3xl font-black mt-5">¥4,000〜</p>
+          <p class="text-white/55 text-sm mt-3">迷ったらこれ。</p>
+        </div>
+
+        <div class="rounded-3xl bg-white p-6 shadow-xl tilt-card reveal">
+          <p class="text-amber font-black">SPECIAL</p>
+          <h3 class="font-serif text-2xl font-black mt-2">満足コース</h3>
+          <p class="text-3xl font-black mt-5">¥5,000〜</p>
+          <p class="text-sumi/55 text-sm mt-3">しっかり楽しみたい日に。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 px-4 bg-sumi">
+    <div class="max-w-6xl mx-auto">
+      <p class="text-gold font-black tracking-[.25em] text-xs reveal">INSTAGRAM</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-black mt-3 reveal-left">日々のこじょう。</h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mt-10">
+        <div class="insta-card rounded-3xl overflow-hidden h-52 md:h-72 reveal">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80" class="w-full h-full object-cover">
+        </div>
+        <div class="insta-card rounded-3xl overflow-hidden h-52 md:h-72 reveal">
+          <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=900&q=80" class="w-full h-full object-cover">
+        </div>
+        <div class="insta-card rounded-3xl overflow-hidden h-52 md:h-72 reveal">
+          <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=900&q=80" class="w-full h-full object-cover">
+        </div>
+        <div class="insta-card rounded-3xl overflow-hidden h-52 md:h-72 reveal">
+          <img src="https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=900&q=80" class="w-full h-full object-cover">
+        </div>
+        <div class="insta-card rounded-3xl overflow-hidden h-52 md:h-72 reveal">
+          <img src="https://images.unsplash.com/photo-1543352634-a1c51d9f1fa7?auto=format&fit=crop&w=900&q=80" class="w-full h-full object-cover">
+        </div>
+        <div class="insta-card rounded-3xl overflow-hidden h-52 md:h-72 reveal">
+          <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80" class="w-full h-full object-cover">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reserve" class="py-20 px-4 bg-sumi border-t border-white/10">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-amber font-black tracking-[.25em] text-xs reveal">RESERVE</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-black mt-3 reveal-left">予約・宴会相談</h2>
+      <p class="text-white/65 leading-8 mt-5 reveal">
+        人数・日時・希望内容を入力して送信。お急ぎの方はお電話ください。
+      </p>
+
+      <form class="mt-8 bg-white text-sumi rounded-[2rem] p-5 md:p-8 space-y-5 shadow-soft reveal" onsubmit="event.preventDefault(); alert('サンプルです。実制作時にメール送信へ接続します。');">
+        <input class="form-input" placeholder="お名前" required>
+        <input class="form-input" placeholder="電話番号" required>
+        <input class="form-input" placeholder="希望日時 例：6/10 19:00〜" required>
+
+        <select class="form-input">
+          <option>人数</option>
+          <option>2〜4名</option>
+          <option>5〜10名</option>
+          <option>11〜20名</option>
+          <option>21名以上</option>
+        </select>
+
+        <select class="form-input">
+          <option>ご希望内容</option>
+          <option>席だけ予約</option>
+          <option>飲み放題希望</option>
+          <option>宴会コース相談</option>
+          <option>貸切・大人数相談</option>
+        </select>
+
+        <textarea class="form-input min-h-32" placeholder="ご相談内容・コース希望など"></textarea>
+
+        <button class="shine w-full rounded-full bg-amber py-4 font-black shadow-glow">予約内容を送信</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="py-20 px-4 bg-cream text-sumi">
+    <div class="max-w-6xl mx-auto">
+      <p class="text-amber font-black tracking-[.25em] text-xs reveal">INFO</p>
+      <h2 class="font-serif text-4xl md:text-5xl font-black mt-3 reveal-left">店舗情報</h2>
+
+      <div class="mt-8 rounded-[2rem] bg-white p-6 md:p-8 shadow-xl space-y-4 reveal">
+        <p><b>店名：</b>居酒屋こじょう</p>
+        <p><b>住所：</b>〒753-0077 山口県山口市熊野町4-18</p>
+        <p><b>電話：</b><a href="tel:07056773930" class="text-amber font-black">070-5677-3930</a></p>
+        <p><b>営業時間：</b>17:30〜24:00</p>
+        <p><b>定休日：</b>不定休</p>
+
+        <div class="pt-4">
+          <p class="font-black mb-3">決済方法</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="pay-badge rounded-full bg-sumi text-white px-4 py-2 text-sm">PayPay</span>
+            <span class="rounded-full bg-sumi text-white px-4 py-2 text-sm">auPAY</span>
+            <span class="rounded-full bg-sumi text-white px-4 py-2 text-sm">d払い</span>
+            <span class="rounded-full bg-sumi text-white px-4 py-2 text-sm">楽天Pay</span>
+            <span class="rounded-full bg-sumi text-white px-4 py-2 text-sm">交通系IC</span>
+            <span class="rounded-full bg-sumi text-white px-4 py-2 text-sm">VISA</span>
+            <span class="rounded-full bg-sumi text-white px-4 py-2 text-sm">MasterCard</span>
+            <span class="rounded-full bg-sumi text-white px-4 py-2 text-sm">JCB</span>
+            <span class="rounded-full bg-sumi text-white px-4 py-2 text-sm">AMEX</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-sumi border-t border-white/10 py-10 px-4 text-center text-white/45 text-sm">
+    © 2026 居酒屋こじょう. Sample site by デジまかせ.
+  </footer>
+
+  <div class="fixed bottom-0 left-0 right-0 z-50 bg-sumi/90 backdrop-blur-xl border-t border-white/10 p-3 grid grid-cols-2 gap-3 md:hidden">
+    <a href="tel:07056773930" class="shine rounded-full bg-amber text-sumi py-3 text-center font-black">📞 今すぐ電話</a>
+    <a href="#reserve" class="rounded-full bg-white text-sumi py-3 text-center font-black">🍺 宴会相談</a>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => observer.observe(el));
+
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - .5) * 10;
+      const y = (e.clientY / window.innerHeight - .5) * 10;
+
+      document.querySelectorAll('.float').forEach(el => {
+        el.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    });
+  </script>
+
+</body>
+</html>
